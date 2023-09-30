@@ -25,4 +25,4 @@ ps aux | grep Xvfb
 export NO_COLOR=1
 #export ELECTRON_EXTRA_LAUNCH_ARGS=--remote-debugging-port=9222
 # execute tests
-npm test
+npm run cy:run

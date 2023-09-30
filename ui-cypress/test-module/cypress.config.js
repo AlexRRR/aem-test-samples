@@ -22,6 +22,7 @@ const authorPass = process.env.AEM_AUTHOR_PASSWORD || 'admin'
 const publishURL = process.env.AEM_PUBLISH_URL || 'http://localhost:4503'
 const publishName = process.env.AEM_PUBLISH_USERNAME || 'admin'
 const publishPass = process.env.AEM_PUBLISH_PASSWORD || 'admin'
+const { cloudPlugin } = require("cypress-cloud/plugin");
 
 let config = {
   env: {
@@ -33,17 +34,19 @@ let config = {
     AEM_PUBLISH_PASSWORD: publishPass,
     REPORTS_PATH: reportsPath,
   },
+  numTestsKeptInMemory: 0,
+  reporter: 'cypress-multi-reporters',
+  reporterOptions: {
+    configFile: 'multi-reporter-config.js',
+  },
   e2e: {
     setupNodeEvents(on, config) {
       require('cypress-terminal-report/src/installLogsPrinter')(on, {
         printLogsToConsole: "always",
       });
+      return cloudPlugin(on, config);
     },
     baseUrl: authorURL,
-    reporter: 'cypress-multi-reporters',
-    reporterOptions: {
-      configFile: 'reporter.config.js',
-    },
   },
   videosFolder: reportsPath + "/videos",
   screenshotsFolder: reportsPath + "/screenshots",

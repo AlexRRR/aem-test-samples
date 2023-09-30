@@ -5,15 +5,23 @@
   "main": "index.js",
   "devDependencies": {
     "cypress": "12.17.0",
+    "cypress-cloud": "^1.9.6",
     "cypress-fail-on-console-error": "^4.0.3",
     "cypress-multi-reporters": "^1.6.3",
-    "mocha-junit-reporter": "^2.2.0",
-    "cypress-terminal-report": "^5.3.3"
+    "cypress-parallel": "^0.13.0",
+    "cypress-terminal-report": "^5.3.3",
+    "junit-report-merger": "^6.0.2",
+    "mocha-junit-reporter": "^2.2.0"
   },
   "scripts": {
     "test": "cypress run --browser electron",
+    "clean": "rm -rf cypress/results",
     "test-chrome": "cypress run --browser chrome",
-    "test-firefox": "cypress run --browser firefox"
+    "test-firefox": "cypress run --browser firefox",
+    "combine:reports": "jrm cypress/results/combined-report.xml \"cypress/results/*.xml\"",
+    "delete:reports": "rm cypress/results/results*.xml || true",
+    "cy:parallel": "cypress-parallel -t1 -s test-chrome -d cypress/e2e -p 'multi-reporter-config.js'",
+    "cy:run": "npm run clean && npm run cy:parallel && npm run combine:reports && npm run delete:reports"
   },
   "author": "",
   "license": "ISC"

@@ -166,7 +166,8 @@
                                     <executable>docker</executable>
                                     <workingDirectory>.</workingDirectory>
                                     <arguments>
-                                        <argument>run</argument>
+					    <argument>run</argument>
+					    <argument>--cpus=3</argument>    
                                         <argument>-eAEM_AUTHOR_URL=${AEM_AUTHOR_URL}</argument>
                                         <argument>-eAEM_AUTHOR_USERNAME=${AEM_AUTHOR_USERNAME}</argument>
                                         <argument>-eAEM_AUTHOR_PASSWORD=${AEM_AUTHOR_PASSWORD}</argument>
